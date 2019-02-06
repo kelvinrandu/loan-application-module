@@ -21,7 +21,11 @@ from api.database import conn, create_tables
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^create/', views.index),
-    url(r'^api/personal/', views.personal_details),
+    url(r'^api/personal/$', views.personal_details),
+    url(r'^api/personal/retrieve/$', views.retrieve_details),
+    url(r'^api/personal/update/(?P<user_id>\d+)/$', views.update_details),
+    url(r'^api/personal/delete/(?P<user_id>\d+)/$', views.delete_details),
+   
 ]
 
 # run migrations during startup

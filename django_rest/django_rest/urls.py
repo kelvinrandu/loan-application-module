@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from api import views
+from api.database import conn, create_tables
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^create/', views.index),
 ]
 
-print('started succesfully')
+create_tables()

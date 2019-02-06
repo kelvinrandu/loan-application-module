@@ -21,6 +21,8 @@ from api.database import conn, create_tables
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^create/', views.index),
+    url(r'^api/personal/', views.personal_details),
 ]
 
+# run migrations during startup
 create_tables()

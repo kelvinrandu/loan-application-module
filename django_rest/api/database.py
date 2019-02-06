@@ -1,8 +1,9 @@
 import os
 from psycopg2 import connect, extras
 
-url ="postgresql://localhost/django?user=postgres&password=1234"
-conn = connect(url)
+url ="postgresql://localhost:5432/django?user=postgres&password=1234"
+url2 ="postgres://postgres:1234@localhost:5432/rest"
+conn = connect(url2)
 cur = conn.cursor()
 print('connected to test database...')
 
@@ -15,7 +16,7 @@ def create_tables():
 
         # drop tables if they exist
 
-        cur.execute("DROP TABLE IF EXISTS users, address, employment, business, banks, bank_details, loans_in_other_banks, loan_particulars ;")
+        cur.execute("DROP TABLE IF EXISTS users, address, employment, business, banks, bank_details, loans_in_other_banks, loan_particulars CASCADE;")
 
         # define sql queries
 
@@ -28,13 +29,12 @@ def create_tables():
                 email varchar,
                 pin int,
                 marital_status varchar,
-                number_of_dependants int,
-                created_at timestamp default now());
+                number_of_dependants int );
                 """
 
         address = """
                 CREATE TABLE IF NOT EXISTS address(id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
+                user_id integer   not null references users (id) on delete cascade,
                 town varchar,
                 estate varchar,
                 street_number varchar,
@@ -45,7 +45,7 @@ def create_tables():
 
         employment = """
                 CREATE TABLE IF NOT EXISTS employment(id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
+                user_id integer   not null references users (id) on delete cascade,
                 employer varchar,
                 address varchar,
                 staff_number int, 
@@ -58,7 +58,7 @@ def create_tables():
 
         business = """
                 CREATE TABLE IF NOT EXISTS  business(id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
+                user_id integer   not null references users (id) on delete cascade,
                 type_of_business varchar,
                 years_of_operation int,
                 business_income int,
@@ -80,8 +80,8 @@ def create_tables():
 
         bank_details = """
                 CREATE TABLE IF NOT EXISTS bank_details(id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
-                bank_id integer   not null references banks (id),
+                user_id integer   not null references users (id) on delete cascade,
+                bank_id integer   not null references banks (id) on delete cascade,
                 account_name varchar,
                 account_number int,
                 created_at timestamp default now());
@@ -90,8 +90,8 @@ def create_tables():
 
         loans_in_other_banks = """
                 CREATE TABLE IF NOT EXISTS loans_in_other_banks(id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
-                bank_id integer   not null references banks (id),
+                user_id integer   not null references users (id) on delete cascade,
+                bank_id integer   not null references banks (id) on delete cascade,
                 date_granted timestamp,
                 amount int,
                 repayment_period int,
@@ -103,7 +103,7 @@ def create_tables():
 
         loan_particulars  = """
                 CREATE TABLE IF NOT EXISTS loan_particulars (id serial PRIMARY KEY,
-                user_id integer   not null references users (id),
+                user_id integer   not null references users (id) on delete cascade,
                 loan_type varchar,
                 purpose varchar,
                 amount int,

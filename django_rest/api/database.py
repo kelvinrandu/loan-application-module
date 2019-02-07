@@ -29,7 +29,8 @@ def create_tables():
                 email varchar,
                 pin int,
                 marital_status varchar,
-                number_of_dependants int );
+                number_of_dependants int,
+                created_at timestamp default now());
                 """
 
         address = """
@@ -111,8 +112,11 @@ def create_tables():
                 """
 
 
+        dummy_personal = """ 
+                    INSERT INTO users(first_name, middle_name, last_name, id_number, email, pin , marital_status, number_of_dependants)VALUES('twenty','one', 'savage','0686867','savage@gmail.com','12345','single','3');
+                    """
         dummy_banks = """ 
-                    INSERT INTO banks(bank_name, bank_code, branch_name,  branch_code)VALUES('kcb','09688', 'parklands','0686867');
+                    INSERT INTO banks(bank_name, bank_code, branch_name,  branch_code)VALUES('barclays','09688', 'parklands','0686867');
                     """
 
 
@@ -128,6 +132,7 @@ def create_tables():
         cur.execute(loan_particulars)
         cur.execute(loan_particulars)
         cur.execute(dummy_banks)
+        cur.execute(dummy_personal)
         conn.commit()
         # conn.close()
         

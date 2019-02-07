@@ -25,6 +25,10 @@ urlpatterns = [
     url(r'^api/personal/retrieve/$', views.retrieve_details),
     url(r'^api/personal/update/(?P<user_id>\d+)/$', views.update_details),
     url(r'^api/personal/delete/(?P<user_id>\d+)/$', views.delete_details),
+    url(r'^api/address/$', views.address_details),
+    url(r'^api/address/retrieve/$', views.retrieve_address_details),
+    url(r'^api/address/update/(?P<address_id>\d+)/$', views.update_address_details),
+    url(r'^api/address/delete/(?P<address_id>\d+)/$', views.delete_address_details),
    
 ]
 

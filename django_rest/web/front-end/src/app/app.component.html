@@ -1,15 +1,20 @@
 
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">create</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">view</a></h2>
-  </li>
-  <li *ngFor="let bank of banks">
-    <h2>{{bank.bank_name}} {{bank.branch_name}} </h2>
-  </li>
-</ul>
+<section style="background:#efefe9;">
+  <div class="container">
+      <div class="board">
+          <!-- Navigation Area (Circular Tabs) -->
+          <msw-navbar></msw-navbar>
+          <!-- End Navigation Area (Circular Tabs) -->
 
-<router-outlet></router-outlet>
+          <!-- Content Area -->
+          <div class="tab-content">
+              <!-- Routed view  -->
+              <router-outlet></router-outlet>
+          </div>
+          <!-- End Content Area -->
+      </div>
+
+      <!-- For Debugging: show our formData as it is being typed -->
+      <pre>{{ formData | json }}</pre>
+  </div>
+</section>

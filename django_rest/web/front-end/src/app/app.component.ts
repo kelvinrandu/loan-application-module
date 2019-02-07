@@ -1,28 +1,21 @@
-import { Component } from '@angular/core';
-import { ApiService } from './api.service';
+import { Component, OnInit, Input }   from '@angular/core';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [ApiService]
+import { FormDataService }            from './data/formData.service';
+
+@Component ({
+    selector:     'multi-step-wizard-app'
+    ,templateUrl: './app.component.html'
 })
-export class AppComponent {
-  banks = [{bank_name: 'kcb', branch_name: 'parklands'},{bank_name: 'barclays', branch_name: 'westlands'}];
 
-  constructor(private api: ApiService ){
-    this.getAllBanks();
-  }
-  getAllBanks = () => {
-    this.api.getAllBanks().subscribe(
-      data => {
-        this.banks = data;
+export class AppComponent implements OnInit {
+    title = 'Multi-Step Wizard';
+    @Input() formData;
+    
+    constructor(private formDataService: FormDataService) {
+    }
 
-      },
-      error => {
-        console.log(error);
-      }
-    )
-
-  }
+    ngOnInit() {
+        this.formData = this.formDataService.getFormData();
+        console.log(this.title + ' loaded!');
+    }
 }
